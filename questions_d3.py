@@ -1,5 +1,7 @@
 #q1 access elements from a tuple
 #write a program that creates a tuple and prints specifics elements using indexing
+
+
 def q1():
     t1=(1,2,3,4,5)
     for x in t1:
