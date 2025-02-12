@@ -1,0 +1,2 @@
+Hello world!
+this is python program to read the file
