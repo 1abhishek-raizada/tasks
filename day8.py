@@ -96,3 +96,5 @@ from mypackage.module1 import greet
 
 greet()
 #result=mypackage.greet()
+
+
