@@ -59,6 +59,7 @@ except InvalidAgeError as e:
 class NetworkError(RuntimeError):
     def __init__(self, args):
         self.args=args
+        
 try:
     raise NetworkError('error')
 except NetworkError as e:
