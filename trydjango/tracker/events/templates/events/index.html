@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Tracker </title>
+   
+</head>
+<body>
+    <div id="status">User is Inactive</div>
+
+    <button id="start-btn">Start Tracking</button>
+    <button id="stop-btn" disabled>Stop Tracking</button>
+   
+    <h1>Tracker</h1>
+    <div id="log" style="border: 1px solid black; height: 300px; overflow-y:scroll;"></div>
+    <a href="{% url 'dashboard' %}" target="_blank">
+        <button>Open Dashboard</button>
+    </a>
+    
+    <script>
+        var socket=new WebSocket("ws://localhost:8000/ws/events/");
+        var tracking = false;
+        var statusDiv=document.getElementById("status");
+        var logDiv= document.getElementById("log");
+        
+        var inactivityTimer;
+        function setInactive(){
+            statusDiv.textContent="User is Inactive";
+
+        }
+        function resetInactivity(){
+            clearTimeout(inactivityTimer);
+            inactivityTimer=setTimeout(setInactive,5000);
+        }
+        
+        socket.onmessage=function(event){
+            resetInactivity();
+            var data=JSON.parse(event.data).message;
+            var parsedData=JSON.parse(data);
+            if (tracking){
+                if (parsedData.status==="active"){
+                    statusDiv.textContent="User is Active";
+                } else {
+                    var newEntry=document.createElement("p");
+                    newEntry.textContent=parsedData.type + " - " + parsedData.key;
+                    logDiv.appendChild(newEntry);
+                }
+
+            }
+            
+        
+            
+        };
+        document.getElementById("start-btn").addEventListener("click",function(){
+            tracking=true;
+            socket.send(JSON.stringify({"command":"start"}));
+            this.disabled=true;
+            document.getElementById("stop-btn").disabled=false;
+            statusDiv.textContent="User is Active";
+            resetInactivity();
+        });
+        document.getElementById("stop-btn").addEventListener("click",function(){
+            tracking=false;
+            socket.send(JSON.stringify({"command":"stop"}));
+            this.disabled=true;
+            document.getElementById("start-btn").disabled=false;
+            setInactive();
+            clearTimeout(inactivityTimer);
+        });
+
+        document.addEventListener("mousemove",resetInactivity);
+        document.addEventListener("keypress",resetInactivity);
+
+
+    </script>    
+    <canvas id="eventChart"></canvas>
+
+    <script src="https://cdn.jsdeliver.net/npm/chart.js">
+        var ctx=document.getElementById('eventChart').getContext('2d');
+        var eventChart= new Chart(ctx,{
+            type:'bar',
+            data:{labels:[],dataset:[{labels:'Events',data:[]}]},
+            options: {responsive:true}
+        });
+        socket.onmessage=function(event){
+            var message=JSON.parse(event.data).message;
+
+        }
+    </script>
+</body>
+
+</html>

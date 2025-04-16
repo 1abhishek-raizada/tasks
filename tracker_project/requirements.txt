@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+pymysql
+sqlalchemy
+pydantic
+passlib[bcrypt]
+pyjwt
+pynput
+requests

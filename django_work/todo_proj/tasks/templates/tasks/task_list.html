@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>To Do List</title>
+    </head>
+    <body>
+        <h1>To Do List</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Add Task</button>
+        </form>
+        <h2>Tasks</h2>
+        
+        <ul>
+            {% for task in tasks %}
+            <li>
+                {{task.description}} (aded on  {{task.created_at}})
+                {% if task.image %}
+                    <br>
+                    <img src="{{ task.image.url }}" alt="image for {{task.description}}" width="200">
+                {% endif %}
+                <br>    
+                <a href="{% url 'update_task' task.id %}">Edit</a>
+
+                <a href="{% url 'delete_task' task.id %}">Delete</a>
+
+            </li>
+            {% empty %}
+                <li>No Tasks Yet!</li>
+            {% endfor  %}    
+
+        </ul>
+        <form method="POST" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button type="submit">Logout</button>
+        </form>
+        
+    </body>
+</html>

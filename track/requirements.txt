@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+pynput
+sqlalchemy
+mysql-connector-python
+python-dotenv
+passlib[bcrypt]
+pyjwt
+pytz
+pyautogui
+pydantic[email]
+python-multipart 

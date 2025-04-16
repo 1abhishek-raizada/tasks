@@ -1,0 +1,31 @@
+Here is the categorized and sorted list of grocery items:
+
+**Bakery**
+• Bread
+
+**Beverages**
+• Milk
+• Orange Juice
+• Yogurt
+
+**Meat**
+• Chicken Breast
+• Ground Beef
+
+**Produce**
+• Apples
+• Bananas
+• Carrots
+• Spinach
+• Tomatoes
+
+**Dairy**
+• Cheese
+• Eggs
+• Yogurt
+
+**Pantry**
+• Cereal
+• Idli
+• Pasta
+• Noodles

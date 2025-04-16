@@ -1,0 +1,24 @@
+fruits=['orange','apples','pear','strawberry','banana','kiwi','kiwi','banana']
+print(fruits.count('orange'))
+print(fruits.count('banana'))
+print(fruits.index('kiwi'))
+print(fruits.index('banana',2))
+fruits.reverse()
+print(fruits)
+fruits.sort()
+print(fruits)
+fruits.pop(0)
+print(fruits)
+fruits.extend('apple')
+print(fruits)
+stack=[]
+stack.append(1)
+stack.append(2)
+stack.append(3)
+print(stack)  
+stack.pop()
+print(stack)
+squares=[]
+for x in range(12):
+    squares.append(x**2)
+print(squares)    
