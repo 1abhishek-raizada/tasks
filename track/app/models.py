@@ -35,7 +35,7 @@ class WorkingHours(Base):
     employee_id=Column(Integer,ForeignKey("employees.id"))
     total_active_seconds=Column(Integer,default=0)
     last_active_time=Column(DateTime,nullable=True)
-    inactivity_alert_sent=Column(Boolean,default=False)
+    inactivity_alert_sent=Column(Integer,default=0)
 
     employee=relationship("Employee",back_populates="working_hours")    
 

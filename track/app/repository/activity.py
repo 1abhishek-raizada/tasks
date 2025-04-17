@@ -128,8 +128,8 @@ def log_activity(action: str, db: Session, employee_id: int):
         working_hours.last_active_time = now
 
             #  Reset the alert flag if user becomes active again
-        if working_hours.inactivity_alert_sent:
-            working_hours.inactivity_alert_sent = False
+        # if working_hours.inactivity_alert_sent:
+        #     working_hours.inactivity_alert_sent += 1
 
 
     new_activity = models.ActivityLog(
@@ -157,11 +157,13 @@ def mark_inactive(employee_id: int):
             employee.is_active = False
 
             working_hours=db.query(models.WorkingHours).filter_by(employee_id=employee_id).first()
-            if working_hours and not working_hours.inactivity_alert_sent:
+            if working_hours:
                 #sending alert
                 send_inactivity_alert(employee.username)
-                working_hours.inactivity_alert_sent=True
-                db.add(working_hours)
+                print("before update")
+                working_hours.inactivity_alert_sent +=1
+                print(f"after update {working_hours.inactivity_alert_sent}")
+                db.commit()
 
             db.commit()
             stop_tracking(employee.username)
@@ -194,9 +196,11 @@ def restart_tracking(username):
 
         keyboard_listener.start()
         mouse_listener.start()
+        
 
         active_listeners[username] = (keyboard_listener, mouse_listener)
         reset_inactivity_timer(db, employee.id)
+        start_screenshot_capture(username)
 
 def stop_tracking(username):
     if username in active_listeners:
@@ -257,6 +261,8 @@ def track_activity(
 def send_inactivity_alert(username: str):
     with next(database.get_db()) as db:
         employee = db.query(models.Employee).filter_by(username=username).first()
+        # models.WorkingHours.inactivity_alert_sent += 1
+        # db.commit()
         if employee and employee.email:
             subject = "⚠️ Inactivity Alert"
             body = f"""

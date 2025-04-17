@@ -22,7 +22,7 @@ def get_employee_working_hours(
         return {"message":"No activity recorded for this employee."}
     
     total_hours=round(working_hours.total_active_seconds/3600, 2) #converting the seconds to hours
-    return {"employee_id":employee_id,"total_active_hours":total_hours}
+    return {"employee_id":employee_id,"total_active_hours":total_hours,}
 
 
 
