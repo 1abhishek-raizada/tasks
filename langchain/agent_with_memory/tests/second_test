@@ -1,0 +1,540 @@
+{
+    "onboarding_state": {
+        "name": "",
+        "inputs": {},
+        "sop_steps": [],
+        "adherence_percentage": 0,
+        "requires_additional_info": false,
+        "should_route": false,
+        "status": "",
+        "end": false
+    },
+    "router_state": {
+        "candidate_routes": [
+            {
+                "option": "estimation",
+                "confidence": 0.95,
+                "reasoning": "The user has confirmed all necessary details for the roof repair, and the previous route was focused on providing an estimate."
+            },
+            {
+                "option": "general",
+                "confidence": 0.7,
+                "reasoning": "The user has expressed that they have shared everything, which may indicate a shift to a more general conversation."
+            }
+        ],
+        "selected_route": {
+            "option": "estimation",
+            "confidence": 0.95,
+            "reasoning": "The user has confirmed all necessary details for the roof repair, and the previous route was focused on providing an estimate."
+        },
+        "enriched_request": "I have shared everything what I had"
+    },
+    "support_state": {
+        "name": "",
+        "inputs": {},
+        "status": "",
+        "end": false
+    },
+    "appointment_state": {
+        "name": "",
+        "inputs": {},
+        "status": "",
+        "end": false
+    },
+    "advisor_state": {
+        "name": "",
+        "messages": [],
+        "inputs": {},
+        "data": [],
+        "docs": [],
+        "context": {},
+        "status": "",
+        "end": false
+    },
+    "summary_state": {
+        "conversation_summary": "1. User, Vikash Pathak, expressed some frustration regarding their experience. 2. The system acknowledged the user's feelings and offered assistance with specific questions or account-related issues. 3. The system emphasized its commitment to providing a smooth and enjoyable experience for the user. 4. User greeted the system with 'Hello'. 5. The system responded warmly, asking how it can assist the user today. 6. User requested assistance with repairing their home roof. 7. The system asked for details about the specific portion of the roof that is affected to better assess the situation. 8. User expressed interest in knowing more about available roofing options. 9. The system provided information about various roofing options, including asphalt shingles, metal roofs, and solar roofing systems, and offered to provide more details on any specific type. 10. User requested more information about asphalt shingles. 11. The system provided details about asphalt shingles, highlighting their durability, color options, and benefits. 12. User confirmed they have not taken any temporary fixes for the roof. 13. User confirmed their email for further communication. 14. User confirmed they did not see any signs of water intrusion. 15. User confirmed that the repair should be good. 16. User confirmed they would like to proceed with the roof repair. 17. User confirmed the dimensions of the affected area as 250 sqft. 18. User confirmed they are ready to proceed with the roof repair. 19. User confirmed that the damage was from last week's storm. 20. User stated they have shared everything they had regarding the roof repair. 21. The system asked for clarification on the user's preference between repair and replacement to provide an accurate estimate.",
+        "user_confirmations": [
+            "User confirmed they have not taken any temporary fixes for the roof.",
+            "User confirmed their email for further communication.",
+            "User confirmed they did not see any signs of water intrusion.",
+            "User confirmed that the repair should be good.",
+            "User confirmed they would like to proceed with the roof repair.",
+            "User confirmed the dimensions of the affected area as 250 sqft.",
+            "User confirmed they are ready to proceed with the roof repair.",
+            "User confirmed that the damage was from last week's storm."
+        ],
+        "sentiment": "neutral",
+        "key_discussion_topics": [
+            "roof repair",
+            "roofing options",
+            "asphalt shingles",
+            "asphalt shingle styles",
+            "durability of asphalt shingles",
+            "color options for asphalt shingles",
+            "benefits of asphalt shingles",
+            "WeatherMax shingles",
+            "Marquis WeatherMax Shingles specifications",
+            "time estimate for roof fixing",
+            "specific location of roof issue",
+            "temporary fixes for roof",
+            "image of damaged area",
+            "estimate for roof repair",
+            "home repair time",
+            "preferred contact method",
+            "signs of water intrusion",
+            "dimensions of affected area",
+            "cost estimation",
+            "repair or replacement preference",
+            "cause of shingle damage",
+            "storm damage"
+        ],
+        "confidence_score": 0.99
+    },
+    "estimation_state": {
+        "name": "estimation",
+        "sop_steps": {
+            "address": {
+                "value": "620 S Clinton Ave, Rochester, NY 14620, USA",
+                "status": "completed",
+                "reasoning": "The user's address is verified and available in the user details.",
+                "available_options": [],
+                "description": "Collect service address and ensure it is verified."
+            },
+            "property_type": {
+                "value": "residential",
+                "status": "completed",
+                "reasoning": "The context indicates the user is requesting roofing services, which is typically residential.",
+                "available_options": [],
+                "description": "Identify the type of property (residential or commercial)."
+            },
+            "affected_portion": {
+                "value": "right corner of the main hall",
+                "status": "completed",
+                "reasoning": "The user has specified the affected portion of the roof in their latest request.",
+                "available_options": [],
+                "description": "Identify the specific portion of the service area that is affected."
+            },
+            "measures_taken": {
+                "value": "",
+                "status": "completed",
+                "reasoning": "The user confirmed they have not taken any temporary fixes for the roof, fulfilling the requirement for this step.",
+                "available_options": [],
+                "description": "Ask the user whether they have taken any temporary fixes or professional help related to the issue."
+            },
+            "service_type": {
+                "value": "roofing",
+                "status": "completed",
+                "reasoning": "The user has requested assistance with repairing their home roof, confirming the service type needed.",
+                "available_options": [],
+                "description": "Identify the type of service required by the user."
+            },
+            "image_for_estimation": {
+                "value": "",
+                "status": "pending",
+                "reasoning": "The user has not provided an image for roof repair estimation, which is required for this step.",
+                "available_options": [],
+                "description": "Ask for the image of the damaged or problematic area for estimation."
+            },
+            "preferred_contact_method": {
+                "value": "Email",
+                "status": "completed",
+                "reasoning": "The user confirmed they would like to use their email for further communication, fulfilling the requirement for this step.",
+                "available_options": [],
+                "description": "Ask for preferred contact method: Phone or Email."
+            }
+        },
+        "adherence_percentage": 83,
+        "actions_available": [
+            {
+                "name": "roofing",
+                "details": "",
+                "id": "roofing",
+                "actions": [
+                    "install",
+                    "repair"
+                ]
+            },
+            {
+                "name": "siding",
+                "details": "",
+                "id": "siding",
+                "actions": [
+                    "install",
+                    "repair"
+                ]
+            },
+            {
+                "name": "windows",
+                "details": "",
+                "id": "windows",
+                "actions": [
+                    "install",
+                    "replace"
+                ]
+            },
+            {
+                "name": "doors",
+                "details": "",
+                "id": "doors",
+                "actions": [
+                    "install",
+                    "replace"
+                ]
+            },
+            {
+                "name": "gutters",
+                "details": "",
+                "id": "gutters",
+                "actions": [
+                    "install",
+                    "repair"
+                ]
+            },
+            {
+                "name": "fencing",
+                "details": "",
+                "id": "fencing",
+                "actions": [
+                    "install",
+                    "repair"
+                ]
+            },
+            {
+                "name": "decking",
+                "details": "",
+                "id": "decking",
+                "actions": [
+                    "install",
+                    "repair"
+                ]
+            },
+            {
+                "name": "solar roofing",
+                "details": "",
+                "id": "solar roofing",
+                "actions": [
+                    "install",
+                    "repair"
+                ]
+            },
+            {
+                "name": "carpentry",
+                "details": "",
+                "id": "carpentry",
+                "actions": [
+                    "install",
+                    "repair"
+                ]
+            },
+            {
+                "name": "window replacement",
+                "details": "",
+                "id": "window replacement",
+                "actions": [
+                    "install",
+                    "replace"
+                ]
+            }
+        ],
+        "dynamic_sops": {
+            "shingle_damage_cause": {
+                "status": "pending",
+                "reasoning": "The user has not provided the approximate dimensions or total square footage of the affected roof area, which is necessary for accurate cost estimation.",
+                "value": "",
+                "description": "Clarify customer's preference between repair and replacement and material choices to tailor cost estimation and service options."
+            },
+            "water_intrusion_signs": {
+                "status": "completed",
+                "reasoning": "The user confirmed they did not see any signs of water intrusion, which directly fulfills the requirement of this step.",
+                "value": "",
+                "description": "Obtain size measurements of the damaged roof area visible in the image to enable precise cost and time estimation."
+            },
+            "repair_or_replacement_preference": {
+                "status": "completed",
+                "reasoning": "The user has not provided any information regarding the cause of the damage, and since the step requires specific details about whether the damage appeared gradually or was caused by a recent weather event, it is marked as completed due to lack of information.",
+                "value": "",
+                "description": "Determine the cause and timeline of the visible cracked and curled shingles on the roof to assess repair urgency and scope."
+            },
+            "affected_area_measurement": {
+                "status": "completed",
+                "reasoning": "The user confirmed there are no signs of water intrusion, which directly fulfills the requirement of this step.",
+                "value": "",
+                "description": "Clarify customer's preference between repair and replacement and material choices to tailor cost estimation and service options."
+            }
+        },
+        "image_urls": [],
+        "dynamic_sops_are_completed": true,
+        "services": [
+            {
+                "service_name": "roofing",
+                "actions_available": [
+                    "install",
+                    "repair"
+                ]
+            },
+            {
+                "service_name": "siding",
+                "actions_available": [
+                    "install",
+                    "repair"
+                ]
+            },
+            {
+                "service_name": "windows",
+                "actions_available": [
+                    "install",
+                    "replace"
+                ]
+            },
+            {
+                "service_name": "doors",
+                "actions_available": [
+                    "install",
+                    "replace"
+                ]
+            },
+            {
+                "service_name": "gutters",
+                "actions_available": [
+                    "install",
+                    "repair"
+                ]
+            },
+            {
+                "service_name": "fencing",
+                "actions_available": [
+                    "install",
+                    "repair"
+                ]
+            },
+            {
+                "service_name": "decking",
+                "actions_available": [
+                    "install",
+                    "repair"
+                ]
+            },
+            {
+                "service_name": "solar roofing",
+                "actions_available": [
+                    "install",
+                    "repair"
+                ]
+            },
+            {
+                "service_name": "carpentry",
+                "actions_available": [
+                    "install",
+                    "repair"
+                ]
+            },
+            {
+                "service_name": "window replacement",
+                "actions_available": [
+                    "install",
+                    "replace"
+                ]
+            }
+        ]
+    },
+    "execution_report_analyzer_state": {
+        "messages": [
+            {
+                "content": "Let's help me with my home repair time",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null,
+                "example": false
+            },
+            {
+                "content": "Thanks for your patience, Vikash! The repair time usually takes a few days to a week, depending on the damage. To provide a more accurate estimate, could you share the dimensions of the affected area?",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "ai",
+                "name": "generator",
+                "id": null,
+                "example": false,
+                "tool_calls": [],
+                "invalid_tool_calls": [],
+                "usage_metadata": null
+            },
+            {
+                "content": "250 sqft",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null,
+                "example": false
+            },
+            {
+                "content": "Thanks for sharing the dimensions, Vikash! To provide an accurate estimate for your roof repair, could you clarify your preference between repair and replacement? Also, if you have an image of the damaged area, that would be super helpful!",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "ai",
+                "name": "generator",
+                "id": null,
+                "example": false,
+                "tool_calls": [],
+                "invalid_tool_calls": [],
+                "usage_metadata": null
+            },
+            {
+                "content": "Let's proceed with repair",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null,
+                "example": false
+            },
+            {
+                "content": "Great to hear you're ready to proceed with the roof repair, Vikash! To tailor the estimate accurately, could you please share the cause of the shingle damage? This will help us provide the best service options for you!",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "ai",
+                "name": "generator",
+                "id": null,
+                "example": false,
+                "tool_calls": [],
+                "invalid_tool_calls": [],
+                "usage_metadata": null
+            },
+            {
+                "content": "It was damaged in last week storm",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null,
+                "example": false
+            },
+            {
+                "content": "I'm sorry to hear about the damage from last week's storm, Vikash! To provide an accurate estimate for your roof repair, could you share an image of the damaged area? This will help us assess the situation better.",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "ai",
+                "name": "generator",
+                "id": null,
+                "example": false,
+                "tool_calls": [],
+                "invalid_tool_calls": [],
+                "usage_metadata": null
+            },
+            {
+                "content": "",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null,
+                "example": false
+            },
+            {
+                "content": "Here is the image",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null,
+                "example": false
+            },
+            {
+                "content": "Thanks for sharing the image, Vikash! To provide an accurate estimate for your roof repair, could you clarify the cause of the shingle damage? This will help us tailor the best service options for you!",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "ai",
+                "name": "generator",
+                "id": null,
+                "example": false,
+                "tool_calls": [],
+                "invalid_tool_calls": [],
+                "usage_metadata": null
+            },
+            {
+                "content": "It was damaged in last week storm",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null,
+                "example": false
+            },
+            {
+                "content": "Thanks for clarifying that the damage was from last week's storm, Vikash! To provide an accurate estimate for your roof repair, could you share any specific details about the damage? This will help us tailor the best service options for you!",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "ai",
+                "name": "generator",
+                "id": null,
+                "example": false,
+                "tool_calls": [],
+                "invalid_tool_calls": [],
+                "usage_metadata": null
+            },
+            {
+                "content": "I have shared everything what I had",
+                "additional_kwargs": {},
+                "response_metadata": {},
+                "type": "human",
+                "name": null,
+                "id": null,
+                "example": false
+            }
+        ],
+        "user_tasks": [
+            {
+                "field": "shingle_damage_cause",
+                "description": "Clarify customer's preference between repair and replacement and material choices to tailor cost estimation and service options.",
+                "status": "pending",
+                "reasoning": "The user has not provided the approximate dimensions or total square footage of the affected roof area, which is necessary for accurate cost estimation.",
+                "component": "estimation"
+            },
+            {
+                "field": "image_for_estimation",
+                "description": "Ask for the image of the damaged or problematic area for estimation.",
+                "status": "pending",
+                "reasoning": "The user has not provided an image for roof repair estimation, which is required for this step.",
+                "component": "estimation"
+            }
+        ],
+        "summary": "",
+        "response_type": "text",
+        "data": [
+            {
+                "topic": "current_topics",
+                "payload": [
+                    {
+                        "topic": "estimation",
+                        "reason": "The user has confirmed all necessary details for the roof repair, and the previous route was focused on providing an estimate.",
+                        "confidence": 0.95
+                    },
+                    {
+                        "topic": "general",
+                        "reason": "The user has expressed that they have shared everything, which may indicate a shift to a more general conversation.",
+                        "confidence": 0.7
+                    }
+                ]
+            },
+            {
+                "topic": "initiators",
+                "payload": {
+                    "type": "initiator",
+                    "data": [
+                        {
+                            "text": "What are the benefits of roof replacement?"
+                        },
+                        {
+                            "text": "How long does a roof repair typically take?"
+                        },
+                        {
+                            "text": "Can you tell me about the warranty options for roofing?"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
