@@ -188,7 +188,7 @@ class Neo4jAgent:
 # Example usage
 def main():
     # Configuration - replace with your actual credentials
-    GROQ_API_KEY="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",
+    GROQ_API_KEY="secret-key",
     NEO4J_URI = "neo4j://127.0.0.1:7687"  # Default Neo4j URI
     NEO4J_USER = "neo4j"
     NEO4J_PASSWORD = "password"
