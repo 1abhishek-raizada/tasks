@@ -10,7 +10,7 @@ from datetime import datetime, timedelta, timezone
 project_gid = '1209119248553524'
  
 # Your Asana Personal Access Token (PAT)
-ASANA_TOKEN = "2/1210688947914366/1210689712265877:a5e68803c483482562b3fc06491fabf7"
+ASANA_TOKEN = ""
  
 # Initialize Asana client
 asana_client = AsanaClient.access_token(ASANA_TOKEN)
