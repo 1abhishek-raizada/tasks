@@ -1,0 +1,647 @@
+{
+  "name": "Improved Preprocessing Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "updates": [
+          "message"
+        ],
+        "additionalFields": {}
+      },
+      "id": "2c9a1f2d-0b1a-4f5e-8e6c-0e7d7a4b1c3d",
+      "name": "Telegram Trigger",
+      "type": "n8n-nodes-base.telegramTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1100,
+        340
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "HYKsD7xabrHvuVNv",
+          "name": "n8npreprocessingagentbot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "value": "={{ $json.message.text }}",
+        "rules": {
+          "rules": [
+            {
+              "id": "e9a03c39-3c3e-4f5d-9a6d-8f2c0b7e1d8f",
+              "operator": {
+                "type": "string",
+                "operation": "contains",
+                "name": "filter.operator.contains"
+              },
+              "rightValue": "docs.google.com"
+            },
+            {
+              "id": "e5b8e9f2-2e4b-4b9d-9c3f-4e0d4a9f8g0h",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              },
+              "rightValue": "/start"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a9b8c7d6-f1e2-4d3c-b2a1-e0d9f8g0h1i2",
+      "name": "Switch",
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 1,
+      "position": [
+        -880,
+        340
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "sendMessage",
+        "chatId": "={{ $json.message.chat.id }}",
+        "text": "Hello! I'm your Preprocessing Agent. Please send me a Google Doc link to get started.",
+        "options": {}
+      },
+      "id": "b3c4d5e6-a1b2-4c3d-8e9f-a0b1c2d3e4f5",
+      "name": "Send Greeting",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -660,
+        480
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "HYKsD7xabrHvuVNv",
+          "name": "n8npreprocessingagentbot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "={{ $json.message.chat.id }}",
+        "message": "I've received your Google Doc. What information are you looking to extract from it? For example: \"the main points and any action items.\"",
+        "responseType": "freeText",
+        "options": {}
+      },
+      "id": "d7e8f9g0-c5d6-4e3f-b2a1-b4c5d6e7f8g9",
+      "name": "Ask for Goal",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -660,
+        200
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "HYKsD7xabrHvuVNv",
+          "name": "n8npreprocessingagentbot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are an AI assistant that generates a clean JSON schema based on a user's request. The schema should have descriptive keys and represent the structure of the data the user wants to extract. Output ONLY the JSON schema."
+            },
+            {
+              "role": "user",
+              "content": "={{ $json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e1f2g3h4-d9e8-4f7g-b6h5-i4j3k2l1m0n",
+      "name": "Generate Schema",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        -440,
+        200
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "ShnU5rmWt7a0uLWX",
+          "name": "n8n-preprocessing-whisper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "chatId": "={{ $('Telegram Trigger').item.json.message.chat.id }}",
+        "message": "=Here is the schema I've generated based on your request:\n\n```json\n{{ $('Generate Schema').item.json.text }}\n```\n\nDo you approve this? Reply with \"yes\" to proceed, or paste your own edited version.",
+        "responseType": "freeText",
+        "options": {}
+      },
+      "id": "f5g6h7i8-e3f2-4g1h-b8i7-j6k5l4m3n2o1",
+      "name": "Propose Schema",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -220,
+        200
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "HYKsD7xabrHvuVNv",
+          "name": "n8npreprocessingagentbot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "g9h0i1j2-f7g6-4h5i-b4j3-k2l1m0n9o8p7",
+              "leftValue": "={{ $json.text }}",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              },
+              "rightValue": "yes",
+              "options": {
+                "caseSensitive": false
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "h1i2j3k4-g5f4-4i3j-b2k1-l0m9n8o7p6q5",
+      "name": "Check Approval",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        0,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "i5j6k7l8-h9g8-4j7k-b6l5-m4n3o2p1q0r",
+              "name": "final_schema",
+              "type": "expression",
+              "value": "={{ $('Generate Schema').item.json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "j9k0l1m2-i3h2-4k1l-b0m9-n8o7p6q5r4s",
+      "name": "Set Schema from AI",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "k3l4m5n6-j7i6-4l5m-b4n3-o2p1q0r9s8t",
+              "name": "final_schema",
+              "type": "expression",
+              "value": "={{ $('Propose Schema').item.json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "l7m8n9o0-k1j0-4m9n-b8o7-p6q5r4s3t2u",
+      "name": "Set Schema from User",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        220,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const url = $('Telegram Trigger').item.json.message.text;\nconst match = url.match(/d\\/(.+?)\\//);\nreturn { docId: match ? match[1] : null };",
+        "options": {}
+      },
+      "id": "m1n2o3p4-l5k4-4n3o-b2p1-q0r9s8t7u6v",
+      "name": "Get Doc ID",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        440,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentId": "={{ $json.docId }}"
+      },
+      "id": "n5o6p7q8-m9l8-4o7p-b6q5-r4s3t2u1v0w",
+      "name": "Get Google Doc",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        660,
+        200
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "PPtHdUIVmMw2tyvl",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const text = $('Get Google Doc').first().json.body.content;\nconst videoRegex = /(https?:\\/\\/(?:www\\.)?(?:youtube\\.com\\/watch\\?v=|youtu\\.be\\/)[a-zA-Z0-9_-]{11}|https?:\\/\\/[^\\s\"]+\\.m3u8)/g;\nconst links = text.match(videoRegex) || [];\nreturn links.map(link => {\n  return {\n    json: {\n      videoUrl: link\n    }\n  };\n});",
+        "options": {}
+      },
+      "id": "o9p0q1r2-n3m2-4p1q-b0r9-s8t7u6v5w4x",
+      "name": "Find Video Links",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        880,
+        200
+      ]
+    },
+    {
+      "parameters": {
+        "command": "yt-dlp -x --audio-format mp3 -o \"/data/audio.%(ext)s\" \"{{ $json.videoUrl }}\""
+      },
+      "id": "p3q4r5s6-o7n6-4q5r-b4s3-t2u1v0w9x8y",
+      "name": "Download Audio",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [
+        1100,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "resource": "audio",
+        "operation": "transcribe",
+        "inputFieldName": "data",
+        "options": {}
+      },
+      "id": "q7r8s9t0-p1o0-4r9s-b8t7-u6v5w4x3y2z",
+      "name": "Transcribe Audio (Whisper)",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1320,
+        100
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "ShnU5rmWt7a0uLWX",
+          "name": "n8n-preprocessing-whisper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "r1s2t3u4-q5p4-4s3t-b2u1-v0w9x8y7z6a",
+              "name": "primary_content",
+              "type": "expression",
+              "value": "={{ $('Transcribe Audio (Whisper)').item.json.text }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "s5t6u7v8-r9q8-4t7u-b6v5-w4x3y2z1a0b",
+      "name": "Set Content from Video",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1540,
+        100
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "t9u0v1w2-s3r2-4u1v-b0w9-x8y7z6a5b4c",
+              "name": "primary_content",
+              "type": "expression",
+              "value": "={{ $('Get Google Doc').first().json.body.content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "u3v4w5x6-t7s6-4v5w-b4x3-y2z1a0b9c8d",
+      "name": "Set Content from Text",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1100,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "modelId": {
+          "__rl": true,
+          "value": "gpt-4o",
+          "mode": "list"
+        },
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are an expert AI that extracts structured data from a text document based on a provided JSON schema. Fill out the schema with information from the content precisely. Output ONLY the populated JSON object and nothing else."
+            },
+            {
+              "role": "user",
+              "content": "=JSON Schema:\n{{ $json.final_schema }}\n\nContent to Process:\n{{ $json.primary_content }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "v7w8x9y0-u1v0-4w9x-b8y7-z6a5b4c3d2e",
+      "name": "Final Extraction",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.8,
+      "position": [
+        1760,
+        200
+      ],
+      "credentials": {
+        "openAiApi": {
+          "id": "ShnU5rmWt7a0uLWX",
+          "name": "n8n-preprocessing-whisper"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appbJzi6RkjPZrB4X",
+          "mode": "list",
+          "cachedResultName": "Mitch Dump 1"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblHucMPE02Nkhq6b",
+          "mode": "list",
+          "cachedResultName": "Table 1"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Name": "={{ JSON.parse($json.text).Name }}",
+            "Notes": "={{ JSON.parse($json.text).Notes }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "w1x2y3z4-v5u4-4x3y-b2z1-a0b9c8d7e6f",
+      "name": "Save to Airtable",
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        1980,
+        200
+      ],
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "ELAJBCRI1T68930a",
+          "name": "Airtable Personal Access Token account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Telegram Trigger": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Ask for Goal",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send Greeting",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ask for Goal": {
+      "main": [
+        [
+          {
+            "node": "Generate Schema",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Schema": {
+      "main": [
+        [
+          {
+            "node": "Propose Schema",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Propose Schema": {
+      "main": [
+        [
+          {
+            "node": "Check Approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check Approval": {
+      "main": [
+        [
+          {
+            "node": "Set Schema from AI",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Set Schema from User",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Schema from AI": {
+      "main": [
+        [
+          {
+            "node": "Get Doc ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Schema from User": {
+      "main": [
+        [
+          {
+            "node": "Get Doc ID",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Doc ID": {
+      "main": [
+        [
+          {
+            "node": "Get Google Doc",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Google Doc": {
+      "main": [
+        [
+          {
+            "node": "Find Video Links",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Video Links": {
+      "main": [
+        [
+          {
+            "node": "Download Audio",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Set Content from Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Download Audio": {
+      "main": [
+        [
+          {
+            "node": "Transcribe Audio (Whisper)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Transcribe Audio (Whisper)": {
+      "main": [
+        [
+          {
+            "node": "Set Content from Video",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Content from Video": {
+      "main": [
+        [
+          {
+            "node": "Final Extraction",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Content from Text": {
+      "main": [
+        [
+          {
+            "node": "Final Extraction",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Final Extraction": {
+      "main": [
+        [
+          {
+            "node": "Save to Airtable",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {},
+  "versionId": "c4d3e2f1-a0b9-4c8d-8e7f-a6b5c4d3e2f1"
+}
